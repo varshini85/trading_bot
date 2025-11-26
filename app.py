@@ -22,7 +22,7 @@ def index():
     return render_template("index.html")
 
 @app.route("/api/place_order", methods=["POST"])
-def api_place_order():
+def place_order():
     data = request.get_json(force=True)
     symbol = data.get("symbol")
     side = data.get("side")
@@ -46,7 +46,7 @@ def api_place_order():
         return jsonify({"ok": False, "error": str(e)}), 500
 
 @app.route("/api/open_orders", methods=["GET"])
-def api_open_orders():
+def open_orders():
     symbol = request.args.get("symbol", "BTCUSDT")
     try:
         orders = bot.client.futures_get_open_orders(symbol=symbol)
@@ -55,7 +55,7 @@ def api_open_orders():
         return jsonify({"ok": False, "error": str(e)}), 500
 
 @app.route("/api/position", methods=["GET"])
-def api_position():
+def position():
     symbol = request.args.get("symbol", "BTCUSDT")
     try:
         pos = bot.client.futures_position_information(symbol=symbol)
